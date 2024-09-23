@@ -1,61 +1,64 @@
 import tkinter as tk
 from tkinter import messagebox
 
-def register():
+# Function to handle form submission
+def submit_form():
     name = entry_name.get()
-    age = entry_age.get()
-    gender = gender_var.get()
     email = entry_email.get()
-    
-    if not name or not age or not email:
-        messagebox.showerror("Input Error", "Please fill in all fields.")
-        return
+    password = entry_password.get()
+    gender = gender_var.get()
+    country = country_var.get()
 
-    # Simulate saving the data (you can add database functionality here)
-    messagebox.showinfo("Success", f"Registration successful for {name}!")
+    if name and email and password and gender and country:
+        messagebox.showinfo("Success", f"Registration successful!\nName: {name}\nEmail: {email}")
+    else:
+        messagebox.showwarning("Error", "Please fill all fields!")
 
-    # Clear the fields after registration
-    entry_name.delete(0, tk.END)
-    entry_age.delete(0, tk.END)
-    entry_email.delete(0, tk.END)
-    gender_var.set("Male")
-
-# Creating the main window
+# Create the main window
 root = tk.Tk()
 root.title("Registration Form")
+root.geometry("400x400")
 
-# Creating labels and entry widgets
-label_name = tk.Label(root, text="Name:")
-label_name.grid(row=0, column=0, padx=10, pady=5)
+# Title Label
+title_label = tk.Label(root, text="Registration Form", font=("Arial", 16), pady=10)
+title_label.pack()
 
-entry_name = tk.Entry(root)
-entry_name.grid(row=0, column=1, padx=10, pady=5)
+# Name Field
+label_name = tk.Label(root, text="Full Name", font=("Arial", 12))
+label_name.pack(pady=5)
+entry_name = tk.Entry(root, width=30)
+entry_name.pack(pady=5)
 
-label_age = tk.Label(root, text="Age:")
-label_age.grid(row=1, column=0, padx=10, pady=5)
+# Email Field
+label_email = tk.Label(root, text="Email", font=("Arial", 12))
+label_email.pack(pady=5)
+entry_email = tk.Entry(root, width=30)
+entry_email.pack(pady=5)
 
-entry_age = tk.Entry(root)
-entry_age.grid(row=1, column=1, padx=10, pady=5)
+# Password Field
+label_password = tk.Label(root, text="Password", font=("Arial", 12))
+label_password.pack(pady=5)
+entry_password = tk.Entry(root, show='*', width=30)
+entry_password.pack(pady=5)
 
-label_gender = tk.Label(root, text="Gender:")
-label_gender.grid(row=2, column=0, padx=10, pady=5)
+# Gender Field
+label_gender = tk.Label(root, text="Gender", font=("Arial", 12))
+label_gender.pack(pady=5)
+gender_var = tk.StringVar()
+tk.Radiobutton(root, text="Male", variable=gender_var, value="Male").pack()
+tk.Radiobutton(root, text="Female", variable=gender_var, value="Female").pack()
+tk.Radiobutton(root, text="Other", variable=gender_var, value="Other").pack()
 
-gender_var = tk.StringVar(value="Male")
-gender_male = tk.Radiobutton(root, text="Male", variable=gender_var, value="Male")
-gender_male.grid(row=2, column=1, padx=10, pady=5, sticky="w")
+# Country Field
+label_country = tk.Label(root, text="Country", font=("Arial", 12))
+label_country.pack(pady=5)
+country_var = tk.StringVar()
+country_menu = tk.OptionMenu(root, country_var, "India", "USA", "UK", "Canada", "Australia")
+country_menu.pack(pady=5)
 
-gender_female = tk.Radiobutton(root, text="Female", variable=gender_var, value="Female")
-gender_female.grid(row=2, column=1, padx=70, pady=5, sticky="w")
+# Submit Button
+submit_button = tk.Button(root, text="Submit", font=("Arial", 12), command=submit_form)
+submit_button.pack(pady=20)
 
-label_email = tk.Label(root, text="Email:")
-label_email.grid(row=3, column=0, padx=10, pady=5)
-
-entry_email = tk.Entry(root)
-entry_email.grid(row=3, column=1, padx=10, pady=5)
-
-# Register button
-register_button = tk.Button(root, text="Register", command=register)
-register_button.grid(row=4, column=0, columnspan=2, pady=10)
-
-# Start the main loop
+# Start the main event loop
 root.mainloop()
